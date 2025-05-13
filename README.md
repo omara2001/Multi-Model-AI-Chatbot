@@ -2,8 +2,6 @@
 
 A versatile AI chatbot application that allows users to interact with multiple open-source AI models through a single, unified interface. Built with FastAPI for the backend and vanilla HTML, CSS, and JavaScript for the frontend.
 
-![Multi-Model AI Chatbot Screenshot](https://i.imgur.com/example.png)
-
 ## 🌟 Features
 
 - **Multiple AI Models**: Access to various open-source models like Llama 3, Mistral, Mixtral, DeepSeek, UI-TARS, Qwen, and Phi-3
@@ -18,12 +16,6 @@ A versatile AI chatbot application that allows users to interact with multiple o
 - **Export/Import**: Save your conversations and settings for backup or transfer
 - **Keyboard Shortcuts**: Navigate quickly with keyboard commands
 - **Settings Panel**: Customize voice, appearance, and behavior
-
-## 🚀 Live Demo
-
-Try the application live at: [https://multi-model-ai-chatbot.example.com](https://multi-model-ai-chatbot.example.com)
-
-The backend API is deployed at: [https://multi-model-ai-chatbot-production.up.railway.app](https://multi-model-ai-chatbot-production.up.railway.app)
 
 ## 🛠️ Tech Stack
 
@@ -53,8 +45,8 @@ The backend API is deployed at: [https://multi-model-ai-chatbot-production.up.ra
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/multi-model-ai-chatbot.git
-   cd multi-model-ai-chatbot
+   git clone https://github.com/omara2001/Multi-Model-AI-Chatbot.git
+   cd Multi-Model-AI-Chatbot
    ```
 
 2. Navigate to the backend directory:

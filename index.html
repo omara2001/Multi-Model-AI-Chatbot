@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Model AI Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-header">
+            <h2><i class="fas fa-cog"></i> Settings</h2>
+            <button type="button" id="close-settings" class="icon-button" aria-label="Close settings">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="settings-section">
+            <h3>Appearance</h3>
+            <div class="setting-item">
+                <label for="theme-select">Theme:</label>
+                <select id="theme-select">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="auto">System Default</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Voice Settings</h3>
+            <div class="setting-item">
+                <label for="voice-select">Voice:</label>
+                <select id="voice-select"></select>
+            </div>
+            <div class="setting-item">
+                <label for="voice-rate">Speech Rate:</label>
+                <input type="range" id="voice-rate" min="0.5" max="2" step="0.1" value="1">
+                <span id="voice-rate-value">1.0</span>
+            </div>
+            <div class="setting-item">
+                <label for="voice-pitch">Pitch:</label>
+                <input type="range" id="voice-pitch" min="0.5" max="2" step="0.1" value="1">
+                <span id="voice-pitch-value">1.0</span>
+            </div>
+            <div class="setting-item checkbox">
+                <input type="checkbox" id="auto-read-responses" checked>
+                <label for="auto-read-responses">Auto-read AI responses</label>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Data Management</h3>
+            <div class="setting-buttons">
+                <button type="button" id="export-data" class="secondary-button">
+                    <i class="fas fa-download"></i> Export Chats
+                </button>
+                <button type="button" id="import-data" class="secondary-button">
+                    <i class="fas fa-upload"></i> Import Chats
+                </button>
+                <button type="button" id="clear-all-data" class="danger-button">
+                    <i class="fas fa-trash"></i> Clear All Data
+                </button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + Enter</span>
+                    <span class="shortcut-desc">Send message</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + N</span>
+                    <span class="shortcut-desc">New chat</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + S</span>
+                    <span class="shortcut-desc">Save chat</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + ,</span>
+                    <span class="shortcut-desc">Open settings</span>
+                </div>
+                <div class="shortcut-item">
+                    <span class="shortcut-key">Ctrl + M</span>
+                    <span class="shortcut-desc">Toggle voice input</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat History Sidebar -->
+    <div class="chat-sidebar" id="chat-sidebar">
+        <div class="sidebar-header">
+            <h2>Chat History</h2>
+            <button type="button" id="new-chat" class="primary-button">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+            <button type="button" id="close-sidebar" class="icon-button mobile-only" aria-label="Close sidebar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="chat-list" id="chat-list">
+            <!-- Chat history items will be added here dynamically -->
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div class="chat-container">
+        <header>
+            <div class="header-left">
+                <button type="button" id="toggle-sidebar" class="icon-button" aria-label="Toggle chat history">
+                    <i class="fas fa-history"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-robot logo-icon"></i>
+                    <h1>Multi-Model AI Chatbot</h1>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="model-selector">
+                    <label for="model-select">AI Model:</label>
+                    <select id="model-select"></select>
+                </div>
+                <div class="header-buttons">
+                    <button type="button" id="voice-toggle" class="icon-button" title="Toggle voice input" aria-label="Toggle voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button type="button" id="reset-chat" class="icon-button" title="Reset chat" aria-label="Reset chat">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <button type="button" id="save-chat" class="icon-button" title="Save chat" aria-label="Save chat">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button type="button" id="open-settings" class="icon-button" title="Settings" aria-label="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button type="button" id="theme-toggle" class="icon-button" title="Toggle theme" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="welcome-message" id="welcome-message">
+                <div class="welcome-icon-container">
+                    <i class="fas fa-robot welcome-icon"></i>
+                </div>
+                <h2>Welcome to Multi-Model AI Chatbot</h2>
+
+                <div class="model-cards">
+                    <div class="model-card">
+                        <div class="model-card-icon"><i class="fas fa-bolt"></i></div>
+                        <h4>Fast Response</h4>
+                        <p>Llama 3 8B, Mistral 7B</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-card-icon"><i class="fas fa-brain"></i></div>
+                        <h4>Balanced</h4>
+                        <p>Mixtral 8x7B, Qwen3 4B</p>
+                    </div>
+                    <div class="model-card">
+                        <div class="model-card-icon"><i class="fas fa-star"></i></div>
+                        <h4>Advanced</h4>
+                        <p>DeepSeek V3, UI-TARS 72B</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="voice-indicator" id="voice-indicator">
+            <div class="voice-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <p>Listening... <span id="voice-text"></span></p>
+            <buttonbutton type="button" id="stop-voice" class="icon-button" title="Stop voice input" aria-label="Stop voice input">
+                <i class="fas fa-stop"></i>
+            </button>
+        </div>
+
+        <div class="chat-input">
+            <form id="chat-form">
+                <input type="text" id="user-input" placeholder="Type your message here or press Ctrl+M to use voice..." autocomplete="off">
+                <div class="input-buttons">
+                    <button type="button" id="voice-input" class="icon-button" title="Voice input" aria-label="Voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button type="submit" id="send-button" title="Send message" aria-label="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Save Chat Dialog -->
+    <div class="modal" id="save-chat-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Save Chat</h2>
+                <buttonbutton type="button" class="close-modal icon-button" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="chat-name">Chat Name:</label>
+                    <input type="text" id="chat-name" placeholder="Enter a name for this chat">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="secondary-button close-modal">Cancel</button>
+                <button type="button" id="confirm-save-chat" class="primary-button">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="voice-features.js"></script>
+    <script src="chat-history.js"></script>
+    <script src="ui-controls.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
